@@ -23,10 +23,19 @@ int drivespeed = 75;
 int liftspeed = 25;
 
 int main() {
+
+  void autonomous(void);
+
+  
+
+  void usercontrol(void);
+
   while (1) {
-    LeftMotor.spin(vex::directionType::fwd, vex::controller().Axis3.position()/1.5,
+    LeftMotor.spin(vex::directionType::fwd,
+                   vex::controller().Axis3.position() / 1.5,
                    vex::velocityUnits::pct);
-    RightMotor.spin(vex::directionType::rev, vex::controller().Axis2.position()/1.5,
+    RightMotor.spin(vex::directionType::rev,
+                    vex::controller().Axis2.position() / 1.5,
                     vex::velocityUnits::pct);
     if (vex::controller().ButtonUp.pressing()) {
       LiftMotor1.spin(vex::directionType::fwd, liftspeed,
@@ -38,8 +47,9 @@ int main() {
                       vex::velocityUnits::pct);
       LiftMotor2.spin(vex::directionType::rev, liftspeed,
                       vex::velocityUnits::pct);
+
+      // Gives the processor time to not burn battery out. NEVER DELETE
+      this_thread::sleep_for(20);
     }
-    // Allow other tasks to run
-    this_thread::sleep_for(20);
   }
 }
